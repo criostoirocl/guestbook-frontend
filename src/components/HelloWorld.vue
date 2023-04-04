@@ -1,40 +1,64 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <v-container>
+      <div class="v-row">
+        <div class="v-col">
+          <h1>Guestbook</h1>
+          <br>
+        </div>
+      </div>
+      <div class="v-row">
+        <div class="v-col">
+          <v-card>
+            <v-card-text>
+              <v-textarea placeholder="Enter your comment here" v-model="form.comment"></v-textarea>
+              <br>
+              <v-btn @click="saveComment">Save Comment</v-btn>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+      <div class="v-row">
+        <div class="v-col">
+          <v-list>
+            <v-list-item v-for="(comment, index) in comments">{{ comment.comment }} @ {{ comment.createdAt }}</v-list-item>
+          </v-list>
+        </div>
+      </div>
+    </v-container>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data(){
+    return {
+      form: {
+        comment: null
+      },
+      comments: []
+    }
+  },
+  methods: {
+    async getComments(){
+      let resp = await axios.get(process.env.VUE_APP_API_URL + "comment")
+      this.comments = resp.data
+    },
+    async saveComment() {
+      if(this.form.comment != null && this.form.comment != ""){
+        let resp = await axios.post(process.env.VUE_APP_API_URL + "comment", this.form)
+        await this.getComments()
+        this.form.comment = null
+      }
+    }
+  },
+  created() {
+    this.getComments()
   }
 }
 </script>
