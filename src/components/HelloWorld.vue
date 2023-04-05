@@ -37,8 +37,18 @@ export default {
     msg: String
   },
   data(){
+
+    let url = window.location.host;
+
+    let env = "";
+    for(let envName of ["qa", "uat", "preprod", "prod"]){
+      if(url.indexOf(envName) !== -1){
+        env = envName
+      }
+    }
+
     return {
-      url: "http://guestbookbackend.devbop.com/",
+      url: "http://" + env + "-guestbookbackend.devbop.com/",
       form: {
         comment: null,
       },
