@@ -38,20 +38,21 @@ export default {
   },
   data(){
     return {
+      url: "http://guestbookbackend.devbop.com/",
       form: {
-        comment: null
+        comment: null,
       },
       comments: []
     }
   },
   methods: {
     async getComments(){
-      let resp = await axios.get(process.env.VUE_APP_API_URL + "comment")
+      let resp = await axios.get(this.url + "comment")
       this.comments = resp.data
     },
     async saveComment() {
       if(this.form.comment != null && this.form.comment != ""){
-        let resp = await axios.post(process.env.VUE_APP_API_URL + "comment", this.form)
+        let resp = await axios.post(this.url + "comment", this.form)
         await this.getComments()
         this.form.comment = null
       }
