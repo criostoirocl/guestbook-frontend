@@ -21,7 +21,7 @@
       <div class="v-row">
         <div class="v-col">
           <v-list>
-            <v-list-item v-for="(comment, index) in comments">{{ comment.comment }} @ {{ comment.createdAt }}</v-list-item>
+            <v-list-item v-for="(comment, index) in comments">{{ comment.comment }}  {{ comment.createdAt }}</v-list-item>
           </v-list>
         </div>
       </div>
@@ -47,8 +47,10 @@ export default {
       }
     }
 
+    url = env? "http://" + env + "-guestbookbackend.devbop.com/": "http://localhost:8080/";
+
     return {
-      url: "http://" + env + "-guestbookbackend.devbop.com/",
+      url: url,
       form: {
         comment: null,
       },
