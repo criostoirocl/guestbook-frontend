@@ -42,7 +42,7 @@ export default {
 
     let env = "";
     for(let envName of ["qa", "uat", "preprod", "prod"]){
-      if(url.indexOf(envName) !== -1){
+      if(url.indexOf(envName) === 0){
         env = envName
       }
     }
