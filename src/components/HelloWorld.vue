@@ -21,7 +21,7 @@
       <div class="v-row">
         <div class="v-col">
           <v-list>
-            <v-list-item v-for="(comment, index) in comments">{{ comment.comment }} @ {{ comment.createdAt }}</v-list-item>
+            <v-list-item v-for="(comment, index) in comments">{{ comment.comment }}  {{ comment.createdAt }}</v-list-item>
           </v-list>
         </div>
       </div>
@@ -37,21 +37,34 @@ export default {
     msg: String
   },
   data(){
+
+    let url = window.location.host;
+
+    let env = "";
+    for(let envName of ["qa", "uat", "preprod", "prod"]){
+      if(url.indexOf(envName) === 0){
+        env = envName
+      }
+    }
+
+    url = env? "http://" + env + "-guestbookbackend.devbop.com/": "http://localhost:8080/";
+
     return {
+      url: url,
       form: {
-        comment: null
+        comment: null,
       },
       comments: []
     }
   },
   methods: {
     async getComments(){
-      let resp = await axios.get(process.env.VUE_APP_API_URL + "comment")
+      let resp = await axios.get(this.url + "comment")
       this.comments = resp.data
     },
     async saveComment() {
       if(this.form.comment != null && this.form.comment != ""){
-        let resp = await axios.post(process.env.VUE_APP_API_URL + "comment", this.form)
+        let resp = await axios.post(this.url + "comment", this.form)
         await this.getComments()
         this.form.comment = null
       }
