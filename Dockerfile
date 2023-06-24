@@ -21,4 +21,4 @@ RUN npm run build
 EXPOSE 8080
 EXPOSE 80
 
-CMD http-server dist
+CMD http-server -p 80 dist
