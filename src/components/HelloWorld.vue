@@ -3,7 +3,7 @@
     <v-container>
       <div class="v-row">
         <div class="v-col">
-          <h1>Guestbook</h1>
+          <h1>Guestbook {{testenv}} d</h1>
           <br>
         </div>
       </div>
@@ -31,10 +31,16 @@
 
 <script>
 import axios from 'axios'
+import {getEnv} from "../../config";
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    testenv(){
+      return getEnv("VITE_API_URL")
+    }
   },
   data(){
 
