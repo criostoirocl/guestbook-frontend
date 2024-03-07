@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div>
+      {{ myEnv }}
+    </div>
     <HelloWorld msg="Welcome to Your Vue.js Appff 29"/>
   </div>
 </template>
@@ -11,6 +14,11 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  computed:{
+    myEnv(){
+      return process.env.VUE_APP_MY_ENV
+    }
   }
 }
 </script>
