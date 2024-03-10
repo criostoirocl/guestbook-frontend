@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      {{ myEnv }} - {{ apiUrl }} - 1
+      {{ myEnv }} - {{ apiUrl }} - 2
     </div>
     <HelloWorld msg="Welcome to Your Vue.js Appff 30"/>
   </div>
@@ -20,7 +20,7 @@ export default {
       return process.env.VUE_APP_MY_ENV
     },
     apiUrl(){
-      return process.env.VITE_API_URL
+      return process.env.VUE_APP_VITE_API_URL
     },
   }
 }
