@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      {{ myEnv }} - {{ apiUrl }} - 2
+      {{ myEnv }} - {{ apiUrl }} - 2 preview merge pull request preview
     </div>
     <HelloWorld msg="Welcome to Your Vue.js Appff 30"/>
   </div>
